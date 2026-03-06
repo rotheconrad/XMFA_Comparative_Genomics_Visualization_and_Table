@@ -72,30 +72,37 @@ Each row represents a genome, allowing rapid identification of **haplotypes, str
 ### 1️⃣ Extract a genomic region
 
 ```bash
-samtools faidx genome.fa Gm15:1-4000000 > genome_chr15_1_4Mb.fa
+samtools faidx CommunityReferenceGenome.fa ChrX:3000000-7000000 > CommunityReferenceGenome_chrX_3_7Mb.fa
+samtools faidx genome-01.fa ChrX:3000000-7000000 > genome01_chrX_3_7Mb.fa
+samtools faidx genome-02.fa ChrX:3000000-7000000 > genome02_chrX_3_7Mb.fa
+samtools faidx genome-03.fa ChrX:3000000-7000000 > genome03_chrX_3_7Mb.fa
+samtools faidx genome-0x.fa ChrX:3000000-7000000 > genome0x_chrX_3_7Mb.fa
 ```
 
 ### 2️⃣ Align genomes with Mauve
 
 ```bash
 progressiveMauve \
-  --output=Gm15_alignment.xmfa \
-  genome1.fa genome2.fa genome3.fa
+  --output=Genome_chrX_alignment.xmfa \
+  CommunityReferenceGenome.fa genome01.fa genome02.fa genome03.fa genome0x.fa
 ```
+
+Or follow Mauve documation: https://darlinglab.org/mauve/mauve.html
+
 
 ### 3️⃣ Generate the visualization
 
 ```bash
 python plot_xmfa_window.py \
-  --xmfa Gm15_alignment.xmfa \
-  --ref-sid Wm82a6 \
-  --seqid Gm15 \
-  --start 2050000 \
-  --end 2080000 \
-  --genes-gff genes.gff3.gz \
-  --repeats-gff repeats.gff3.gz \
-  --order Wm82a6 Benning Clark Harosoy Kingawa Minsoy MiyakoWhite \
-  --out promoter_region.pdf
+  --xmfa Genome_chrX_alignment.xmfa \
+  --ref-sid CommunityReferenceGenome \
+  --seqid chrX \
+  --start 4050000 \
+  --end 4080000 \
+  --genes-gff CommunityReferenceGenome.genes.gff3.gz \
+  --repeats-gff CommunityReferenceGenome.repeats.gff3.gz \
+  --order CommunityReferenceGenome genome01 genome0x genome03 genome02 \
+  --out interesting_region.pdf
 ```
 
 ---
@@ -145,19 +152,7 @@ Visualization output
 Large genome assemblies can be hundreds of megabases or gigabases long.
 For faster alignment and visualization it is often helpful to extract a **smaller genomic window**.
 
-Example genomes:
-
-```
-Wm82a6
-Benning
-Clark
-Harosoy
-Kingawa
-Minsoy
-MiyakoWhite
-```
-
-Index the genome:
+Index the genomes:
 
 ```bash
 samtools faidx genome.fa
@@ -166,7 +161,7 @@ samtools faidx genome.fa
 Extract a region:
 
 ```bash
-samtools faidx genome.fa Gm15:1-4000000 > genome_chr15_1_4Mb.fa
+samtools faidx genome.fa ChromName:3000000-7000000 > genome_chrX_3_7Mb.fa
 ```
 
 ---
@@ -186,13 +181,11 @@ Run alignment:
 ```bash
 progressiveMauve \
   --output=Gm15_alignment.xmfa \
-  Wm82a6_chr15_1_4Mb.fa \
-  Benning_chr15_1_4Mb.fa \
-  Clark_chr15_1_4Mb.fa \
-  Harosoy_chr15_1_4Mb.fa \
-  Kingawa_chr15_1_4Mb.fa \
-  Minsoy_chr15_1_4Mb.fa \
-  MiyakoWhite_chr15_1_4Mb.fa
+  CommunityReferenceGenome_chrX_3_7Mb.fa \
+  genome01_chrX_3_7Mb.fa \
+  genome02_chrX_3_7Mb.fa \
+  genome03_chrX_3_7Mb.fa \
+  genome0x_chrX_3_7Mb.fa \
 ```
 
 ---
@@ -202,22 +195,21 @@ progressiveMauve \
 To provide biological context, the visualization overlays:
 
 * gene annotations
-* exon structures
 * repeat annotations
 
 Annotation sources include:
 
 ```
 Phytozome
-SoyBase
+NCBI
 Ensembl Plants
 ```
 
 Example annotation files:
 
 ```
-Gmax_880_Wm82.a6.v1.gene_exons.gff3.gz
-Gmax_880_Wm82.a6.v1.repeatmasked_assembly_v6.0.gff3.gz
+CommunityReferenceGenome.v1.gene_exons.gff3.gz
+CommunityReferenceGenome.v1.repeatmasked_assembly_v6.0.gff3.gz
 ```
 
 ---
@@ -269,15 +261,15 @@ Example command for plotting a promoter region:
 
 ```
 python plot_xmfa_window.py \
-  --xmfa Gm15_alignment.xmfa \
-  --ref-sid Wm82a6 \
-  --seqid Gm15 \
-  --start 2050000 \
-  --end 2080000 \
-  --genes-gff Gmax_880_Wm82.a6.v1.gene_exons.gff3.gz \
-  --repeats-gff Gmax_880_Wm82.a6.v1.repeatmasked_assembly_v6.0.gff3.gz \
-  --order Wm82a6 Benning Clark Harosoy Kingawa Minsoy MiyakoWhite \
-  --out Glyma15G025500_promoter.pdf
+  --xmfa Genome_chrX_alignment.xmfa \
+  --ref-sid CommunityReferenceGenome \
+  --seqid ChrX \
+  --start 4050000 \
+  --end 4080000 \
+  --genes-gff CommunityReferenceGenome.v1.gene_exons.gff3.gz \
+  --repeats-gff CommunityReferenceGenome.v1.repeatmasked_assembly_v6.0.gff3.gz \
+  --order CommunityReferenceGenome genome01 genome0x genome03 genome02 \
+  --out interesting_region.pdf
 ```
 
 ---
