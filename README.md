@@ -52,9 +52,7 @@ The README provided here explains the workflow, required inputs, and how to inte
 
 Below is an example visualization showing variation around a candidate promoter region.
 
-```
-[IMAGE PLACEHOLDER: docs/example_alignment.png]
-```
+![Example Output Figure](images/example_image.png)
 
 The visualization contains four tracks:
 
@@ -110,10 +108,6 @@ python plot_xmfa_window.py \
 # Workflow Overview
 
 The typical workflow used in this repository is illustrated below.
-
-```
-[IMAGE PLACEHOLDER: docs/workflow_diagram.png]
-```
 
 ```
 Genome assemblies (FASTA)
