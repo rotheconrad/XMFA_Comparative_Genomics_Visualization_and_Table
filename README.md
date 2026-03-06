@@ -40,7 +40,6 @@ The README provided here explains the workflow, required inputs, and how to inte
 * [Interpreting the Visualization](#interpreting-the-visualization)
 * [Why Use XMFA Instead of VCF](#why-use-xmfa-instead-of-vcf)
 * [Performance Notes](#performance-notes)
-* [Repository Structure](#repository-structure)
 * [Applications](#applications)
 * [Future Improvements](#future-improvements)
 * [Citation](#citation)
@@ -387,32 +386,6 @@ This makes XMFA particularly useful for **crop genomes with high repeat content 
 | -------------- | ------- |
 | 10k columns    | <1 sec  |
 | 100k columns   | ~2 sec  |
-
----
-
-# Repository Structure
-
-```
-xmfa-genome-visualization
-│
-├── plot_xmfa_window.py
-├── README.md
-│
-├── docs
-│   ├── example_alignment.png
-│   └── workflow_diagram.png
-│
-├── example_data
-│   ├── example_alignment.xmfa
-│   ├── genes.gff3.gz
-│   └── repeats.gff3.gz
-│
-└── example_output
-    ├── example_region.pdf
-    ├── example_region.svg
-    ├── example_region.sample_summary.tsv
-    └── example_region.column_summary.tsv
-```
 
 ---
 
